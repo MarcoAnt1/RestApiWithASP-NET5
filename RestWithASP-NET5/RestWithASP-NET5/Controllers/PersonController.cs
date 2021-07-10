@@ -6,7 +6,7 @@ using RestWithASP_NET5.Services;
 namespace RestWithASP_NET5.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     public class PersonController : ControllerBase
     {
         private readonly ILogger<CalculatorController> _logger;
@@ -52,7 +52,7 @@ namespace RestWithASP_NET5.Controllers
             return Ok(_personService.Update(person));
         }
 
-        [HttpGet("{id}")]
+        [HttpDelete("{id}")]
         public IActionResult Delete(long id)
         {
             _personService.Delete(id);

@@ -10,6 +10,8 @@ namespace RestWithASP_NET5.Services.Implementations
 
         public Person Create(Person person)
         {
+            person.Id = IncrementAndGet();
+
             return person;
         }
 
