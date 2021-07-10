@@ -5,8 +5,4 @@
     <RootNamespace>RestWithASP_NET5</RootNamespace>
   </PropertyGroup>
 
-  <ItemGroup>
-    <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="5.0.1" />
-  </ItemGroup>
-
 </Project>
