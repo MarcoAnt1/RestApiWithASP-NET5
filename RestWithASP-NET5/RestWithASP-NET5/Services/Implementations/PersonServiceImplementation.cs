@@ -1,8 +1,8 @@
 ﻿using RestWithASP_NET5.Model;
 using RestWithASP_NET5.Model.Context;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading;
 
 namespace RestWithASP_NET5.Services.Implementations
 {
@@ -15,18 +15,6 @@ namespace RestWithASP_NET5.Services.Implementations
             _context = context;
         }
 
-        public Person Create(Person person)
-        {
-            person.Id = 1;
-
-            return person;
-        }
-
-        public void Delete(long id)
-        {
-
-        }
-
         public List<Person> FindAll()
         {
             return _context.People.ToList();
@@ -34,39 +22,66 @@ namespace RestWithASP_NET5.Services.Implementations
 
         public Person FindById(long id)
         {
-            return new Person
+            return _context.People.SingleOrDefault(p => p.Id.Equals(id));
+        }
+
+        public Person Create(Person person)
+        {
+            try
             {
-                Id = 1,
-                FirstName = "Marco",
-                LastName = "Souza",
-                Address = "Vila Sonia - São Paulo - Brasil",
-                Gender = "Male"
-            };
+                _context.Add(person);
+                _context.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+            return person;
         }
 
         public Person Update(Person person)
         {
-            return person;
-        } 
-        
-        private Person MockPerson(int i)
-        {
-            return new Person
+            if (!Exists(person.Id))
+                return new Person();
+
+            var result = _context.People.SingleOrDefault(p => p.Id.Equals(person.Id));
+            if (result != null)
             {
-                Id = 1,
-                FirstName = $"Person Name {i}",
-                LastName = $"Person LastName {i}",
-                Address = $"Some Address {i}",
-                Gender = GetGender(i)
-            };
+                try
+                {
+                    _context.Entry(result).CurrentValues.SetValues(person);
+                    _context.SaveChanges();
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+            }
+
+            return person;
         }
 
-        private static string GetGender(int i)
+        public void Delete(long id)
         {
-            if (i % 2 == 0)
-                return "Male";
-            else
-                return "Famale";
+            var result = _context.People.SingleOrDefault(p => p.Id.Equals(id));
+            if (result != null)
+            {
+                try
+                {
+                    _context.People.Remove(result);
+                    _context.SaveChanges();
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+            }
+        }
+
+        private bool Exists(long id)
+        {
+            return _context.People.Any(p => p.Id.Equals(id));
         }
     }
 }
