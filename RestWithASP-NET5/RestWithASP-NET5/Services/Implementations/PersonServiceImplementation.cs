@@ -1,16 +1,23 @@
 ﻿using RestWithASP_NET5.Model;
+using RestWithASP_NET5.Model.Context;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 
 namespace RestWithASP_NET5.Services.Implementations
 {
     public class PersonServiceImplementation : IPersonService
     {
-        private volatile int count;
+        private readonly MySQLContext _context;
+
+        public PersonServiceImplementation(MySQLContext context)
+        {
+            _context = context;
+        }
 
         public Person Create(Person person)
         {
-            person.Id = IncrementAndGet();
+            person.Id = 1;
 
             return person;
         }
@@ -22,21 +29,14 @@ namespace RestWithASP_NET5.Services.Implementations
 
         public List<Person> FindAll()
         {
-            List<Person> people = new();
-            for (int i = 0; i < 8; i++)
-            {
-                Person person = MockPerson(i);
-                people.Add(person);
-            }
-
-            return people;
+            return _context.People.ToList();
         }
 
         public Person FindById(long id)
         {
             return new Person
             {
-                Id = IncrementAndGet(),
+                Id = 1,
                 FirstName = "Marco",
                 LastName = "Souza",
                 Address = "Vila Sonia - São Paulo - Brasil",
@@ -53,7 +53,7 @@ namespace RestWithASP_NET5.Services.Implementations
         {
             return new Person
             {
-                Id = IncrementAndGet(),
+                Id = 1,
                 FirstName = $"Person Name {i}",
                 LastName = $"Person LastName {i}",
                 Address = $"Some Address {i}",
@@ -61,11 +61,6 @@ namespace RestWithASP_NET5.Services.Implementations
             };
         }
 
-        private long IncrementAndGet()
-        {
-            return Interlocked.Increment(ref count);
-        }
-        
         private static string GetGender(int i)
         {
             if (i % 2 == 0)
