@@ -20,7 +20,7 @@ namespace RestWithASP_NET5.Services.Implementations
 
         public List<Person> FindAll()
         {
-            List<Person> people = new List<Person>();
+            List<Person> people = new();
             for (int i = 0; i < 8; i++)
             {
                 Person person = MockPerson(i);
