@@ -1,41 +1,93 @@
-﻿using RestWithASP_NET5.Model.Base;
+﻿using Microsoft.EntityFrameworkCore;
+using RestWithASP_NET5.Model.Base;
+using RestWithASP_NET5.Model.Context;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace RestWithASP_NET5.Repository.Generic
 {
     public class GenericRepository<T> : IRepository<T> where T : BaseEntity
     {
-        public T Create(T item)
-        {
-            throw new NotImplementedException();
-        }
+        private readonly MySqlContext _context;
 
-        public void Delete(long id)
-        {
-            throw new NotImplementedException();
-        }
+        private readonly DbSet<T> dataSet;
 
-        public bool Exists(long id)
+        public GenericRepository(MySqlContext context)
         {
-            throw new NotImplementedException();
+            _context = context;
+            dataSet = _context.Set<T>();
         }
 
         public List<T> FindAll()
         {
-            throw new NotImplementedException();
+            return dataSet.ToList();
         }
 
         public T FindById(long id)
         {
-            throw new NotImplementedException();
+            return dataSet.SingleOrDefault(p => p.Id.Equals(id));
         }
 
+        public T Create(T item)
+        {
+            try
+            {
+                dataSet.Add(item);
+                _context.SaveChanges();
+                return item;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+     
         public T Update(T item)
         {
-            throw new NotImplementedException();
+            if (!Exists(item.Id))
+                return null;
+
+            var result = dataSet.SingleOrDefault(p => p.Id.Equals(item.Id));
+            if (result != null)
+            {
+                try
+                {
+                    _context.Entry(result).CurrentValues.SetValues(item);
+                    _context.SaveChanges();
+                    return result;
+                }
+                catch (Exception)
+                {
+                    throw;
+                }
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        public void Delete(long id)
+        {
+            var result = dataSet.SingleOrDefault(p => p.Id.Equals(id));
+            if (result != null)
+            {
+                try
+                {
+                    dataSet.Remove(result);
+                    _context.SaveChanges();
+                }
+                catch (Exception)
+                {
+                    throw;
+                }
+            }
+        }
+
+        public bool Exists(long id)
+        {
+            return dataSet.Any(p => p.Id.Equals(id));
         }
     }
 }
