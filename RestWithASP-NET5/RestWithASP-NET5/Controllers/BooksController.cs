@@ -33,7 +33,7 @@ namespace RestWithASP_NET5.Controllers
         }
 
         [HttpPost]
-        public IActionResult Create([FromBody] Books books)
+        public IActionResult Create([FromBody] Book books)
         {
             if (books == null)
                 return BadRequest();
@@ -42,7 +42,7 @@ namespace RestWithASP_NET5.Controllers
         }
 
         [HttpPut]
-        public IActionResult Update([FromBody] Books books)
+        public IActionResult Update([FromBody] Book books)
         {
             if (books == null)
                 return BadRequest();

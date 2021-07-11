@@ -5,14 +5,14 @@ namespace RestWithASP_NET5.Business
 {
     public interface IBooksBusiness
     {
-        Books Create(Books Books);
+        Book Create(Book Books);
 
-        Books Update(Books person);
+        Book Update(Book person);
 
         void Delete(long id);
 
-        Books FindById(long id);
+        Book FindById(long id);
 
-        List<Books> FindAll();
+        List<Book> FindAll();
     }
 }

@@ -13,6 +13,7 @@ using Serilog;
 using System;
 using MySqlConnector;
 using System.Collections.Generic;
+using RestWithASP_NET5.Repository.Generic;
 
 namespace RestWithASP_NET5
 {
@@ -49,8 +50,9 @@ namespace RestWithASP_NET5
             // Dependency Injection
             services.AddScoped<IPersonBusiness, PersonBusinessImplementation>();
             services.AddScoped<IPersonRepository, PersonRepositoryImplementation>();
-            services.AddScoped<IBooksBusiness, BooksBusinessImplementation>();
-            services.AddScoped<IBooksRepository, BooksRepositoryImplementation>();
+            services.AddScoped<IBooksBusiness, BookBusinessImplementation>();
+
+            services.AddScoped(typeof(IRepository<>), typeof(GenericRepository<>));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

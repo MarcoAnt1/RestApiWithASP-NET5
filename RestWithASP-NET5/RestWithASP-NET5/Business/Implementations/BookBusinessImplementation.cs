@@ -4,31 +4,31 @@ using System.Collections.Generic;
 
 namespace RestWithASP_NET5.Business.Implementations
 {
-    public class BooksBusinessImplementation : IBooksBusiness
+    public class BookBusinessImplementation : IBooksBusiness
     {
-        private readonly IBooksRepository _repository;
+        private readonly IRepository<Book> _repository;
 
-        public BooksBusinessImplementation(IBooksRepository repository)
+        public BookBusinessImplementation(IRepository<Book> repository)
         {
             _repository = repository;
         }
 
-        public List<Books> FindAll()
+        public List<Book> FindAll()
         {
             return _repository.FindAll();
         }
 
-        public Books FindById(long id)
+        public Book FindById(long id)
         {
             return _repository.FindById(id);
         }
 
-        public Books Create(Books books)
+        public Book Create(Book books)
         {
             return _repository.Create(books);
         }
 
-        public Books Update(Books books)
+        public Book Update(Book books)
         {
             return _repository.Update(books);
         }
