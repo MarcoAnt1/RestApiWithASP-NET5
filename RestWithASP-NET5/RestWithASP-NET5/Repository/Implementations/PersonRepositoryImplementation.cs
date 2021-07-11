@@ -8,9 +8,9 @@ namespace RestWithASP_NET5.Repository.Implementations
 {
     public class PersonRepositoryImplementation : IPersonRepository
     {
-        private readonly MySQLContext _context;
+        private readonly MySqlContext _context;
 
-        public PersonRepositoryImplementation(MySQLContext context)
+        public PersonRepositoryImplementation(MySqlContext context)
         {
             _context = context;
         }
@@ -43,7 +43,7 @@ namespace RestWithASP_NET5.Repository.Implementations
         public Person Update(Person person)
         {
             if (!Exists(person.Id))
-                return new Person();
+                return null;
 
             var result = _context.People.SingleOrDefault(p => p.Id.Equals(person.Id));
             if (result != null)
