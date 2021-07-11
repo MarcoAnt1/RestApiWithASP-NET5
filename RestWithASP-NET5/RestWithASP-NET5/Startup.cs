@@ -8,11 +8,11 @@ using RestWithASP_NET5.Model.Context;
 using RestWithASP_NET5.Business;
 using RestWithASP_NET5.Business.Implementations;
 using RestWithASP_NET5.Repository;
-using RestWithASP_NET5.Repository.Implementations;
 using Serilog;
 using System;
 using MySqlConnector;
 using System.Collections.Generic;
+using RestWithASP_NET5.Repository.Generic;
 
 namespace RestWithASP_NET5
 {
@@ -39,18 +39,18 @@ namespace RestWithASP_NET5
             var connection = Configuration["MySQLConnection:MySQLConnectionString"];
             services.AddDbContext<MySqlContext>(options => options.UseMySql(connection, ServerVersion.AutoDetect(connection)));
 
-            //if (Environment.IsDevelopment())
-            //{
-            //    MigrateDatabase(connection);
-            //}
+            if (Environment.IsDevelopment())
+            {
+                MigrateDatabase(connection);
+            }
 
             services.AddApiVersioning();
 
             // Dependency Injection
+            services.AddScoped(typeof(IRepository<>), typeof(GenericRepository<>));
             services.AddScoped<IPersonBusiness, PersonBusinessImplementation>();
-            services.AddScoped<IPersonRepository, PersonRepositoryImplementation>();
-            services.AddScoped<IBooksBusiness, BooksBusinessImplementation>();
-            services.AddScoped<IBooksRepository, BooksRepositoryImplementation>();
+            services.AddScoped<IBooksBusiness, BookBusinessImplementation>();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -88,7 +88,6 @@ namespace RestWithASP_NET5
             catch (Exception ex)
             {
                 Log.Error($"Database migration faild: {ex}");
-                throw;
             }
         }
     }
