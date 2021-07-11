@@ -40,10 +40,10 @@ namespace RestWithASP_NET5
             var connection = Configuration["MySQLConnection:MySQLConnectionString"];
             services.AddDbContext<MySqlContext>(options => options.UseMySql(connection, ServerVersion.AutoDetect(connection)));
 
-            //if (Environment.IsDevelopment())
-            //{
-            //    MigrateDatabase(connection);
-            //}
+            if (Environment.IsDevelopment())
+            {
+                MigrateDatabase(connection);
+            }
 
             services.AddApiVersioning();
 
@@ -90,7 +90,6 @@ namespace RestWithASP_NET5
             catch (Exception ex)
             {
                 Log.Error($"Database migration faild: {ex}");
-                throw;
             }
         }
     }
