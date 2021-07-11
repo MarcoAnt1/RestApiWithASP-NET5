@@ -7,9 +7,6 @@ namespace RestWithASP_NET5.Model
     [Table("books")]
     public class Book : BaseEntity
     {
-        [Column("id")]
-        public long Id { get; set; }
-
         [Column("author")]
         public string Author { get; set; }
 

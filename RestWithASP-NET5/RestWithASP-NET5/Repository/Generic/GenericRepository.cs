@@ -26,7 +26,7 @@ namespace RestWithASP_NET5.Repository.Generic
 
         public T FindById(long id)
         {
-            return dataSet.SingleOrDefault(p => p.Id.Equals(id));
+            return dataSet.SingleOrDefault(x => x.Id == id);
         }
 
         public T Create(T item)
@@ -48,7 +48,7 @@ namespace RestWithASP_NET5.Repository.Generic
             if (!Exists(item.Id))
                 return null;
 
-            var result = dataSet.SingleOrDefault(p => p.Id.Equals(item.Id));
+            var result = dataSet.SingleOrDefault(x => x.Id == item.Id);
             if (result != null)
             {
                 try
@@ -70,7 +70,7 @@ namespace RestWithASP_NET5.Repository.Generic
 
         public void Delete(long id)
         {
-            var result = dataSet.SingleOrDefault(p => p.Id.Equals(id));
+            var result = dataSet.SingleOrDefault(x => x.Id == id);
             if (result != null)
             {
                 try
@@ -87,7 +87,7 @@ namespace RestWithASP_NET5.Repository.Generic
 
         public bool Exists(long id)
         {
-            return dataSet.Any(p => p.Id.Equals(id));
+            return dataSet.Any(x => x.Id == id);
         }
     }
 }
