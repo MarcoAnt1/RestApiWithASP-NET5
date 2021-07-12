@@ -7,11 +7,11 @@ namespace RestWithASP_NET5.Controllers
     [ApiVersion("1")]
     [ApiController]
     [Route("v{version:apiVersion}/api/[controller]")]
-    public class BooksController : ControllerBase
+    public class BookController : ControllerBase
     {
-        private readonly IBooksBusiness _booksBusiness;
+        private readonly IBookBusiness _booksBusiness;
 
-        public BooksController(IBooksBusiness booksBusiness)
+        public BookController(IBookBusiness booksBusiness)
         {
             _booksBusiness = booksBusiness;
         }
@@ -33,21 +33,21 @@ namespace RestWithASP_NET5.Controllers
         }
 
         [HttpPost]
-        public IActionResult Create([FromBody] Book books)
+        public IActionResult Create([FromBody] BookVO book)
         {
-            if (books == null)
+            if (book == null)
                 return BadRequest();
 
-            return Ok(_booksBusiness.Create(books));
+            return Ok(_booksBusiness.Create(book));
         }
 
         [HttpPut]
-        public IActionResult Update([FromBody] Book books)
+        public IActionResult Update([FromBody] BookVO book)
         {
-            if (books == null)
+            if (book == null)
                 return BadRequest();
 
-            return Ok(_booksBusiness.Update(books));
+            return Ok(_booksBusiness.Update(book));
         }
 
         [HttpDelete("{id}")]

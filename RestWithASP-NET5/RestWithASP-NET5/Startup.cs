@@ -49,7 +49,7 @@ namespace RestWithASP_NET5
             // Dependency Injection
             services.AddScoped(typeof(IRepository<>), typeof(GenericRepository<>));
             services.AddScoped<IPersonBusiness, PersonBusinessImplementation>();
-            services.AddScoped<IBooksBusiness, BookBusinessImplementation>();
+            services.AddScoped<IBookBusiness, BookBusinessImplementation>();
 
         }
 
