@@ -9,7 +9,6 @@ namespace RestWithASP_NET5.Business.Implementations
     public class PersonBusinessImplementation : IPersonBusiness
     {
         private readonly IRepository<Person> _repository;
-
         private readonly PersonConverter _converter;
 
         public PersonBusinessImplementation(IRepository<Person> repository)
