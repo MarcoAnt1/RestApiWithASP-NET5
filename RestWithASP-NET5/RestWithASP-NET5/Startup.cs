@@ -13,6 +13,7 @@ using System;
 using MySqlConnector;
 using System.Collections.Generic;
 using RestWithASP_NET5.Repository.Generic;
+using Microsoft.Net.Http.Headers;
 
 namespace RestWithASP_NET5
 {
@@ -43,6 +44,15 @@ namespace RestWithASP_NET5
             {
                 MigrateDatabase(connection);
             }
+
+            services.AddMvc(options =>
+            {
+                options.RespectBrowserAcceptHeader = true;
+
+                options.FormatterMappings.SetMediaTypeMappingForFormat("xml", MediaTypeHeaderValue.Parse("application/xml"));
+                options.FormatterMappings.SetMediaTypeMappingForFormat("json", MediaTypeHeaderValue.Parse("application/json"));
+            })
+            .AddXmlSerializerFormatters();
 
             services.AddApiVersioning();
 
