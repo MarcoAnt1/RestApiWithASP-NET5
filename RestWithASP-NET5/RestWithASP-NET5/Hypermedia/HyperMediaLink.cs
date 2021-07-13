@@ -15,7 +15,7 @@ namespace RestWithASP_NET5.Hypermedia
                 object _lock = new();
                 lock (_lock)
                 {
-                    StringBuilder sb = new();
+                    StringBuilder sb = new(href);
                     return sb.Replace("%2F", "/").ToString();
                 }
             }
