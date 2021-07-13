@@ -14,6 +14,8 @@ using MySqlConnector;
 using System.Collections.Generic;
 using RestWithASP_NET5.Repository.Generic;
 using Microsoft.Net.Http.Headers;
+using RestWithASP_NET5.Hypermedia.Filters;
+using RestWithASP_NET5.Hypermedia.Enricher;
 
 namespace RestWithASP_NET5
 {
@@ -54,6 +56,11 @@ namespace RestWithASP_NET5
             })
             .AddXmlSerializerFormatters();
 
+            var filterOptions = new HyperMediaFilterOptions();
+            filterOptions.ContentResponseEnricherList.Add(new PersonEnricher());
+
+            services.AddSingleton(filterOptions);
+
             services.AddApiVersioning();
 
             // Dependency Injection
@@ -80,6 +87,7 @@ namespace RestWithASP_NET5
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+                endpoints.MapControllerRoute("DefaultApi", "{controller=values}/{id?}");
             });
         }
 
