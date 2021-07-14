@@ -12,7 +12,7 @@ namespace RestWithASP_NET5.Hypermedia.Enricher
 
         protected override Task EnrichModel(PersonVO content, IUrlHelper urlHelper)
         {
-            var path = "v1/api/persons/";
+            var path = "v1/api/person";
             string link = GetLink(content.Id, urlHelper, path);
 
             content.Links.Add(new HyperMediaLink()
@@ -51,7 +51,10 @@ namespace RestWithASP_NET5.Hypermedia.Enricher
             lock (_lock)
             {
                 var url = new { controller = path, id = id };
-                return new StringBuilder(urlHelper.Link("DefaultApi", url)).Replace("%2F", "/").ToString();
+                return new StringBuilder(urlHelper.Link("DefaultApi", url))
+                    .Replace("%2F", "/")
+                    .Replace("?version=1", string.Empty)
+                    .ToString();
             };
         }
     }

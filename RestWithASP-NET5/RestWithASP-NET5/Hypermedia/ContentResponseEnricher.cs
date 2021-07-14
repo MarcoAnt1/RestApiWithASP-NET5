@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.AspNetCore.Mvc.Routing;
 using RestWithASP_NET5.Hypermedia.Abstract;
+using Serilog;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
@@ -36,7 +37,14 @@ namespace RestWithASP_NET5.Hypermedia
             {
                 if (okObjectResult.Value is T model)
                 {
-                    await EnrichModel(model, urlHelper);
+                    try
+                    {
+                        await EnrichModel(model, urlHelper);
+                    }
+                    catch (Exception ex)
+                    {
+                        Log.Error($"Database migration faild: {ex}");
+                    }
                 }
                 else if (okObjectResult.Value is List<T> colletion)
                 {
