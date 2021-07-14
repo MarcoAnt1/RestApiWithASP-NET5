@@ -5,8 +5,9 @@ using System.Globalization;
 
 namespace RestWithASP_NET5.Controllers
 {
+    [ApiVersion("1")]
     [ApiController]
-    [Route("[controller]")]
+    [Route("v{version:apiVersion}/api/[controller]")]
     public class CalculatorController : ControllerBase
     {
         private readonly ILogger<CalculatorController> _logger;
