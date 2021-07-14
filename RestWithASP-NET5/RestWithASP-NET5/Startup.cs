@@ -16,6 +16,8 @@ using RestWithASP_NET5.Repository.Generic;
 using Microsoft.Net.Http.Headers;
 using Microsoft.OpenApi.Models;
 using Microsoft.AspNetCore.Rewrite;
+using RestWithASP_NET5.Hypermedia.Filters;
+using RestWithASP_NET5.Hypermedia.Enricher;
 
 namespace RestWithASP_NET5
 {
@@ -55,6 +57,12 @@ namespace RestWithASP_NET5
                 options.FormatterMappings.SetMediaTypeMappingForFormat("json", MediaTypeHeaderValue.Parse("application/json"));
             })
             .AddXmlSerializerFormatters();
+
+            var filterOptions = new HyperMediaFilterOptions();
+            filterOptions.ContentResponseEnricherList.Add(new PersonEnricher());
+            filterOptions.ContentResponseEnricherList.Add(new BookEnricher());
+
+            services.AddSingleton(filterOptions);
 
             services.AddApiVersioning();
 
@@ -112,6 +120,7 @@ namespace RestWithASP_NET5
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+                endpoints.MapControllerRoute("DefaultApi", "{controller=values}/{id?}");
             });
         }
 
