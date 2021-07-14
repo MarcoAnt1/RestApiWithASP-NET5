@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace RestWithASP_NET5.Hypermedia
 {
-    public abstract class ContentResponseEnricher<T> : IResponseEnricher where T : ISupportstHyperMedia
+    public abstract class ContentResponseEnricher<T> : IResponseEnricher where T : ISupportsHyperMedia
     {
         public ContentResponseEnricher() { }
 

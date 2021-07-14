@@ -5,9 +5,9 @@ using System.Text.Json.Serialization;
 
 namespace RestWithASP_NET5.Data.VO
 {
-    public class PersonVO : ISupportstHyperMedia
+    public class PersonVO : ISupportsHyperMedia
     {
-        public int Id { get; set; }
+        public long Id { get; set; }
 
         [JsonPropertyName("Nome")]
         public string FirstName { get; set; }

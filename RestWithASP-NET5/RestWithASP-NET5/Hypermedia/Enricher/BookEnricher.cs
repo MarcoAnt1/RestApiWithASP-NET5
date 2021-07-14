@@ -6,13 +6,13 @@ using System.Threading.Tasks;
 
 namespace RestWithASP_NET5.Hypermedia.Enricher
 {
-    public class PersonEnricher : ContentResponseEnricher<PersonVO>
+    public class BookEnricher : ContentResponseEnricher<BookVO>
     {
         private readonly object _lock = new();
 
-        protected override Task EnrichModel(PersonVO content, IUrlHelper urlHelper)
+        protected override Task EnrichModel(BookVO content, IUrlHelper urlHelper)
         {
-            var path = "v1/api/person";
+            var path = "v1/api/book";
             string link = GetLink(content.Id, urlHelper, path);
 
             content.Links.Add(new HyperMediaLink()
