@@ -43,7 +43,7 @@ namespace RestWithASP_NET5.Hypermedia
                     }
                     catch (Exception ex)
                     {
-                        Log.Error($"Database migration faild: {ex}");
+                        Log.Error($"Error: {ex}");
                     }
                 }
                 else if (okObjectResult.Value is List<T> colletion)
