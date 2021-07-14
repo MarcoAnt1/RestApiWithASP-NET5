@@ -5,6 +5,6 @@ namespace RestWithASP_NET5.Model.Base
     public class BaseEntity
     {
         [Column("id")]
-        public int Id { get; set; }
+        public long Id { get; set; }
     }
 }

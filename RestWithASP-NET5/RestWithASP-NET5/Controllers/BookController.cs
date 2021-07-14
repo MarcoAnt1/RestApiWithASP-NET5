@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using RestWithASP_NET5.Model;
 using RestWithASP_NET5.Business;
+using RestWithASP_NET5.Hypermedia.Filters;
+using RestWithASP_NET5.Data.VO;
 
 namespace RestWithASP_NET5.Controllers
 {
@@ -17,12 +18,14 @@ namespace RestWithASP_NET5.Controllers
         }
 
         [HttpGet]
+        [TypeFilter(typeof(HyperMediaFilter))]
         public IActionResult Get()
         {
             return Ok(_booksBusiness.FindAll());
         }
 
         [HttpGet("{id}")]
+        [TypeFilter(typeof(HyperMediaFilter))]
         public IActionResult Get(long id)
         {
             var person = _booksBusiness.FindById(id);
@@ -33,6 +36,7 @@ namespace RestWithASP_NET5.Controllers
         }
 
         [HttpPost]
+        [TypeFilter(typeof(HyperMediaFilter))]
         public IActionResult Create([FromBody] BookVO book)
         {
             if (book == null)
@@ -42,6 +46,7 @@ namespace RestWithASP_NET5.Controllers
         }
 
         [HttpPut]
+        [TypeFilter(typeof(HyperMediaFilter))]
         public IActionResult Update([FromBody] BookVO book)
         {
             if (book == null)
