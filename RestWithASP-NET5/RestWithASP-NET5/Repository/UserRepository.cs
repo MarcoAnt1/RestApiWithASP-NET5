@@ -25,7 +25,7 @@ namespace RestWithASP_NET5.Repository
             return _context.Users.FirstOrDefault(u => u.UserName == user.UserName && u.Password == password);
         }
 
-        private string ComputeHash(string input, SHA256CryptoServiceProvider algorithm)
+        private static string ComputeHash(string input, SHA256CryptoServiceProvider algorithm)
         {
             byte[] inputBytes = Encoding.UTF8.GetBytes(input);
             byte[] hashedBytes = algorithm.ComputeHash(inputBytes);
