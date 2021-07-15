@@ -75,7 +75,7 @@ namespace RestWithASP_NET5
 
             services.AddAuthorization(auth =>
             {
-                auth.AddPolicy("Beares", new AuthorizationPolicyBuilder()
+                auth.AddPolicy("Bearer", new AuthorizationPolicyBuilder()
                     .AddAuthenticationSchemes(JwtBearerDefaults.AuthenticationScheme)
                     .RequireAuthenticatedUser().Build());
             });

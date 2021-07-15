@@ -7,7 +7,7 @@
             Authenticated = authenticated;
             Created = created;
             Expiraton = expiraton;
-            AccessToekn = accessToken;
+            AccessToken = accessToken;
             RefreshToken = refreshToken;
         }
 
@@ -17,7 +17,7 @@
 
         public string Expiraton { get; set; }
 
-        public string AccessToekn { get; set; }
+        public string AccessToken { get; set; }
 
         public string RefreshToken { get; set; }
     }
