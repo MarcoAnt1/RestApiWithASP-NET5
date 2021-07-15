@@ -2,11 +2,9 @@
 using RestWithASP_NET5.Model;
 using RestWithASP_NET5.Model.Context;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace RestWithASP_NET5.Repository
 {
@@ -25,7 +23,25 @@ namespace RestWithASP_NET5.Repository
             return _context.Users.FirstOrDefault(u => u.UserName == user.UserName && u.Password == password);
         }
 
-        private static string ComputeHash(string input, SHA256CryptoServiceProvider algorithm)
+        public User RefreshUserInfo(User user)
+        {
+            if (!_context.Users.Any(u => u.Id == user.Id))
+                return null;
+
+            var result = _context.Users.SingleOrDefault(x => x.Id == user.Id);
+            try
+            {
+                _context.Entry(result).CurrentValues.SetValues(user);
+                _context.SaveChanges();
+                return result;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        private string ComputeHash(string input, SHA256CryptoServiceProvider algorithm)
         {
             byte[] inputBytes = Encoding.UTF8.GetBytes(input);
             byte[] hashedBytes = algorithm.ComputeHash(inputBytes);
