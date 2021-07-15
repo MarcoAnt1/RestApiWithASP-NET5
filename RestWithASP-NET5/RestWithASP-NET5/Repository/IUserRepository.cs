@@ -7,6 +7,8 @@ namespace RestWithASP_NET5.Repository
     {
         User ValidadeCredentials(UserVO user);
 
+        User ValidadeCredentials(string username);
+
         User RefreshUserInfo(User user);
     }
 }

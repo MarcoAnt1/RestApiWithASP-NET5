@@ -23,6 +23,11 @@ namespace RestWithASP_NET5.Repository
             return _context.Users.FirstOrDefault(u => u.UserName == user.UserName && u.Password == password);
         }
 
+        public User ValidadeCredentials(string username)
+        {
+            return _context.Users.FirstOrDefault(u => u.UserName == username );
+        }
+
         public User RefreshUserInfo(User user)
         {
             if (!_context.Users.Any(u => u.Id == user.Id))
