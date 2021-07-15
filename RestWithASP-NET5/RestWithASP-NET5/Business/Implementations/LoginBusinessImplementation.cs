@@ -14,8 +14,8 @@ namespace RestWithASP_NET5.Business.Implementations
     public class LoginBusinessImplementation : ILoginBusiness
     {
         private const string Date_Format = "yyyy-MM-dd HH:mm:ss";
-        private TokenConfiguration _configuration;
-        private IUserRepository _repository;
+        private readonly TokenConfiguration _configuration;
+        private readonly IUserRepository _repository;
         private readonly ITokenService _tokenService;
 
         public LoginBusinessImplementation(TokenConfiguration configuration, IUserRepository repository, ITokenService tokenService)
@@ -42,6 +42,8 @@ namespace RestWithASP_NET5.Business.Implementations
 
             user.RefreshToken = refreshToken;
             user.RefreshTokenExpiryTime = DateTime.Now.AddDays(_configuration.DaysToExpiry);
+
+            _repository.RefreshUserInfo(user);
 
             DateTime createDate = DateTime.Now;
             DateTime expirationDate = createDate.AddMinutes(_configuration.Minutes);
