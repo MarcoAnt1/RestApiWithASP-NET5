@@ -25,7 +25,20 @@ namespace RestWithASP_NET5.Repository
 
         public User ValidadeCredentials(string username)
         {
-            return _context.Users.FirstOrDefault(u => u.UserName == username );
+            return _context.Users.FirstOrDefault(u => u.UserName == username);
+        }
+
+        public bool RevokeToken(string username)
+        {
+            var user = _context.Users.FirstOrDefault(u => u.UserName == username);
+            if (user is null)
+                return false;
+
+            user.RefreshToken = null;
+
+            _context.SaveChanges();
+
+            return true;
         }
 
         public User RefreshUserInfo(User user)
