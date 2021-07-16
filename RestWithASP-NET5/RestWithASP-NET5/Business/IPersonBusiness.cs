@@ -7,12 +7,14 @@ namespace RestWithASP_NET5.Business
     {
         PersonVO Create(PersonVO person);
 
-        PersonVO Update(PersonVO person);
-
-        void Delete(long id);
-
         PersonVO FindById(long id);
 
         List<PersonVO> FindAll();
+
+        PersonVO Update(PersonVO person);
+
+        PersonVO Disable(long id);
+
+        void Delete(long id);
     }
 }
