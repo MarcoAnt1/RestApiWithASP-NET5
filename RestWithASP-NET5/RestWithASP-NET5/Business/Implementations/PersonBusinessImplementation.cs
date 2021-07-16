@@ -20,13 +20,18 @@ namespace RestWithASP_NET5.Business.Implementations
 
         public List<PersonVO> FindAll()
         {
-            var personList = _converter.Parse(_repository.FindAll());
-            return personList.Where(p => p.Enabled == true).ToList();
+            var peopleList =_converter.Parse(_repository.FindAll());
+            return peopleList.Where(p => p.Enabled == true).ToList();
         }
 
         public PersonVO FindById(long id)
         {
             return _converter.Parse(_repository.FindById(id));
+        }
+
+        public List<PersonVO> FindByName(string firstName, string lastName)
+        {
+            return _converter.Parse(_repository.FindByName(firstName, lastName));
         }
 
         public PersonVO Create(PersonVO person)
