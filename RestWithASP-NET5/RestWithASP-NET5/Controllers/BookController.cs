@@ -3,11 +3,13 @@ using RestWithASP_NET5.Business;
 using RestWithASP_NET5.Hypermedia.Filters;
 using RestWithASP_NET5.Data.VO;
 using System.Collections.Generic;
+using Microsoft.AspNetCore.Authorization;
 
 namespace RestWithASP_NET5.Controllers
 {
     [ApiVersion("1")]
     [ApiController]
+    [Authorize("Bearer")]
     [Route("v{version:apiVersion}/api/[controller]")]
     public class BookController : ControllerBase
     {
