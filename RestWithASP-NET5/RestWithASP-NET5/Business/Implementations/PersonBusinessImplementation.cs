@@ -1,5 +1,6 @@
 ﻿using RestWithASP_NET5.Data.Converter.Implementations;
 using RestWithASP_NET5.Data.VO;
+using RestWithASP_NET5.Hypermedia.Utils;
 using RestWithASP_NET5.Model;
 using RestWithASP_NET5.Repository;
 using System.Collections.Generic;
@@ -24,6 +25,34 @@ namespace RestWithASP_NET5.Business.Implementations
             //return peopleList.Where(p => p.Enabled == true).ToList();
 
             return _converter.Parse(_repository.FindAll());
+        }
+
+        public PagedSearchVO<PersonVO> FindWithPagedSearch(string name, string sortDirection, int pageSize, int page)
+        {
+            var offset = pageSize > 0 ? (page - 1) * pageSize : 0;
+            var sort = (!string.IsNullOrWhiteSpace(sortDirection) && !sortDirection.Equals("desc")) ? "asc" : "desc";
+            var size = pageSize < 1 ? 1 : pageSize;
+
+            string query = @"
+                SELECT * FROM Person p
+                WHERE 1 = 1
+                    AND p.Name LIKE '%LEO%'
+                ORDER BY 
+                    p.name ASC LIMITI 10 OFFSET 1";
+
+            string countQuery = "";
+
+            var people = _repository.FindWithPagedSearch(query);
+            var totalResults = _repository.GetCount(countQuery);
+
+            return new PagedSearchVO<PersonVO>
+            {
+                CurrentPage = offset,
+                List = _converter.Parse(people),
+                PageSize = size,
+                SortDirections = sort,
+                TotalResults = totalResults
+            };
         }
 
         public PersonVO FindById(long id)
