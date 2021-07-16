@@ -9,7 +9,7 @@ namespace RestWithASP_NET5.Repository.Generic
 {
     public class GenericRepository<T> : IRepository<T> where T : BaseEntity
     {
-        private readonly MySqlContext _context;
+        protected readonly MySqlContext _context;
 
         private readonly DbSet<T> dataSet;
 
