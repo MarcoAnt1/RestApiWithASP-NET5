@@ -33,14 +33,19 @@ namespace RestWithASP_NET5.Business.Implementations
             var sort = (!string.IsNullOrWhiteSpace(sortDirection) && !sortDirection.Equals("desc")) ? "asc" : "desc";
             var size = pageSize < 1 ? 1 : pageSize;
 
-            string query = @"
-                SELECT * FROM Person p
-                WHERE 1 = 1
-                    AND p.Name LIKE '%LEO%'
-                ORDER BY 
-                    p.name ASC LIMITI 10 OFFSET 1";
+            string query = @"SELECT * FROM Person p WHERE 1 = 1 ";
+            if (!string.IsNullOrWhiteSpace(name))
+            {
+                query += $" AND p.Name LIKE '%{name}%' ";
+            }
 
-            string countQuery = "";
+            query += $" ORDER BY p.firstName {sort} LIMITI {size} OFFSET {offset}";
+
+            string countQuery = @"SELECT* FROM Person p WHERE 1 = 1 "; 
+            if (!string.IsNullOrWhiteSpace(name))
+            {
+                query += $" AND p.Name LIKE '%{name}%' ";
+            }
 
             var people = _repository.FindWithPagedSearch(query);
             var totalResults = _repository.GetCount(countQuery);
