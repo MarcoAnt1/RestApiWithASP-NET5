@@ -3,6 +3,7 @@ using RestWithASP_NET5.Data.VO;
 using RestWithASP_NET5.Model;
 using RestWithASP_NET5.Repository;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace RestWithASP_NET5.Business.Implementations
 {
@@ -19,7 +20,8 @@ namespace RestWithASP_NET5.Business.Implementations
 
         public List<PersonVO> FindAll()
         {
-            return _converter.Parse(_repository.FindAll());
+            var personList = _converter.Parse(_repository.FindAll());
+            return personList.Where(p => p.Enabled == true).ToList();
         }
 
         public PersonVO FindById(long id)
