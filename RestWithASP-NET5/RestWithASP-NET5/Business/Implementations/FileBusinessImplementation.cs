@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Http;
 using RestWithASP_NET5.Data.VO;
-using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
@@ -20,7 +19,8 @@ namespace RestWithASP_NET5.Business.Implementations
 
         public byte[] GetFile(string fileName)
         {
-            throw new NotImplementedException();
+            var filePath = _basePath + fileName;
+            return File.ReadAllBytes(filePath);
         }
 
         public async Task<FileDetailVO> SaveFileToDisk(IFormFile file)
