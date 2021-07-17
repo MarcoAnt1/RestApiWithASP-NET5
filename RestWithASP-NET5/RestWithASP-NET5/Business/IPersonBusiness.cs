@@ -9,6 +9,8 @@ namespace RestWithASP_NET5.Business
 
         PersonVO FindById(long id);
 
+        List<PersonVO> FindByName(string firstName, string lastName);
+
         List<PersonVO> FindAll();
 
         PersonVO Update(PersonVO person);

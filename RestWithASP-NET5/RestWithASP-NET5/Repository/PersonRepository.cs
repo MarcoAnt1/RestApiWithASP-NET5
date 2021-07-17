@@ -2,13 +2,14 @@
 using RestWithASP_NET5.Model.Context;
 using RestWithASP_NET5.Repository.Generic;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace RestWithASP_NET5.Repository
 {
     public class PersonRepository : GenericRepository<Person>, IPersonRepository
     {
-        public PersonRepository(MySqlContext context) : base (context) { }
+        public PersonRepository(MySqlContext context) : base(context) { }
 
         public Person Disable(long id)
         {
@@ -31,6 +32,24 @@ namespace RestWithASP_NET5.Repository
             }
 
             return user;
+        }
+
+        public List<Person> FindByName(string firstName, string lastName)
+        {
+            if (!string.IsNullOrWhiteSpace(firstName) && !string.IsNullOrWhiteSpace(lastName))
+            {
+                return _context.People.Where(p => p.FirstName.Contains(firstName) && p.LastName.Contains(lastName)).ToList();
+            }
+            else if (string.IsNullOrWhiteSpace(firstName) && !string.IsNullOrWhiteSpace(lastName))
+            {
+                return _context.People.Where(p => p.LastName.Contains(lastName)).ToList();
+            }
+            else if (!string.IsNullOrWhiteSpace(firstName) && string.IsNullOrWhiteSpace(lastName))
+            {
+                return _context.People.Where(p => p.FirstName.Contains(firstName)).ToList();
+            }
+
+            return null;
         }
     }
 }
