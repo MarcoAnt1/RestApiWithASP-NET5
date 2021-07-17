@@ -7,12 +7,12 @@ using System.Threading.Tasks;
 
 namespace RestWithASP_NET5.Business.Implementations
 {
-    public class FileBusiness : IFileBusiness
+    public class FileBusinessImplementation : IFileBusiness
     {
         private readonly string _basePath;
         private readonly IHttpContextAccessor _context;
 
-        public FileBusiness(IHttpContextAccessor context)
+        public FileBusinessImplementation(IHttpContextAccessor context)
         {
             _context = context;
             _basePath = $@"{Directory.GetCurrentDirectory()}\UploadDir\";
