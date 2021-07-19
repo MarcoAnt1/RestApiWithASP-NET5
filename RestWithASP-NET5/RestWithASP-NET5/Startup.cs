@@ -184,22 +184,22 @@ namespace RestWithASP_NET5
             });
         }
 
-        private static void MigrateDatabase(string connection)
-        {
-            try
-            {
-                var evolveConnection = new MySqlConnection(connection);
-                var evolve = new Evolve.Evolve(evolveConnection, msg => Log.Information(msg))
-                {
-                    Locations = new List<string> { "db/migrations", "db/dataset" },
-                    IsEraseDisabled = true,
-                };
-                evolve.Migrate();
-            }
-            catch (Exception ex)
-            {
-                Log.Error($"Database migration faild: {ex}");
-            }
-        }
+        //private static void MigrateDatabase(string connection)
+        //{
+        //    try
+        //    {
+        //        var evolveConnection = new MySqlConnection(connection);
+        //        var evolve = new Evolve.Evolve(evolveConnection, msg => Log.Information(msg))
+        //        {
+        //            Locations = new List<string> { "db/migrations", "db/dataset" },
+        //            IsEraseDisabled = true,
+        //        };
+        //        evolve.Migrate();
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        Log.Error($"Database migration faild: {ex}");
+        //    }
+        //}
     }
 }
