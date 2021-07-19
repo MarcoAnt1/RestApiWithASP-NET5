@@ -1,5 +1,6 @@
 ﻿using RestWithASP_NET5.Data.Converter.Implementations;
 using RestWithASP_NET5.Data.VO;
+using RestWithASP_NET5.Hypermedia.Utils;
 using RestWithASP_NET5.Model;
 using RestWithASP_NET5.Repository;
 using System.Collections.Generic;
@@ -24,6 +25,39 @@ namespace RestWithASP_NET5.Business.Implementations
             //return peopleList.Where(p => p.Enabled == true).ToList();
 
             return _converter.Parse(_repository.FindAll());
+        }
+
+        public PagedSearchVO<PersonVO> FindWithPagedSearch(string name, string sortDirection, int pageSize, int page)
+        {
+            var sort = (!string.IsNullOrWhiteSpace(sortDirection) && !sortDirection.Equals("desc")) ? "asc" : "desc";
+            var size = pageSize < 1 ? 10 : pageSize;
+            var offset = pageSize > 0 ? (page - 1) * size : 0;
+
+            string query = @"SELECT * FROM person p WHERE 1 = 1 ";
+            if (!string.IsNullOrWhiteSpace(name))
+            {
+                query += $" AND p.first_name LIKE '%{name}%' ";
+            }
+
+            query += $" ORDER BY p.first_name {sort} LIMIT {size} OFFSET {offset}";
+
+            string countQuery = @"SELECT* FROM Person p WHERE 1 = 1 "; 
+            if (!string.IsNullOrWhiteSpace(name))
+            {
+                countQuery += $" AND p.first_name LIKE '%{name}%' ";
+            }
+
+            var people = _repository.FindWithPagedSearch(query);
+            var totalResults = _repository.GetCount(countQuery);
+
+            return new PagedSearchVO<PersonVO>
+            {
+                CurrentPage = page,
+                List = _converter.Parse(people),
+                PageSize = size,
+                SortDirections = sort,
+                TotalResults = totalResults
+            };
         }
 
         public PersonVO FindById(long id)
