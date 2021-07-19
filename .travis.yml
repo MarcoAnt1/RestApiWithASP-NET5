@@ -1,8 +1,8 @@
 sudo: required
 dist: bionic
-language: cshapr
+language: csharp
 mono: none
-dotnet: 5.0
+dotnet: 3.1
 services: docker
 before_install:
   - cd RestWithASP-NET5/RestWithASP-NET5
@@ -15,9 +15,9 @@ deploy:
   provider: script
   script:
     docker tag rest-with-asp-net5:latest $DOCKER_USERNAME/rest-with-asp-net5:$TRAVIS_JOB_ID;
-    docker tag rest-with-asp-net5-db:latest $DOCKER_USERNAME/rest-with-asp-net5-db:$TRAVIS_JOB_ID;
-    docker tag $DOCKER_USERNAME/rest-with-asp-net5:$TRAVIS_JOB_ID;
-    docker tag $DOCKER_USERNAME/rest-with-asp-net5-db:$TRAVIS_JOB_ID;
+    docker tag rest-with-asp-net5-db:latest $DOCKER_USERNAME/rest-with-asp-net5:$TRAVIS_JOB_ID;
+    docker push $DOCKER_USERNAME/rest-with-asp-net5:$TRAVIS_JOB_ID;
+    docker push $DOCKER_USERNAME/rest-with-asp-net5-db:$TRAVIS_JOB_ID;
   on:
     branch: main
 notifications:
