@@ -17,7 +17,7 @@ deploy:
     docker tag rest-with-asp-net5:latest $DOCKER_USERNAME/rest-with-asp-net5:$TRAVIS_JOB_ID;
     docker tag rest-with-asp-net5-db:latest $DOCKER_USERNAME/rest-with-asp-net5-db:$TRAVIS_JOB_ID;
     docker tag $DOCKER_USERNAME/rest-with-asp-net5:$TRAVIS_JOB_ID;
-    docker tag $DOCKER_USERNAME/rest-with-asp-net5-db?$TRAVIS_JOB_ID;
+    docker tag $DOCKER_USERNAME/rest-with-asp-net5-db:$TRAVIS_JOB_ID;
   on:
     branch: main
 notifications:
