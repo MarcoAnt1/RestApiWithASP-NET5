@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 using System;
 using System.Globalization;
 
@@ -10,12 +9,7 @@ namespace RestWithASP_NET5.Controllers
     [Route("v{version:apiVersion}/api/[controller]")]
     public class CalculatorController : ControllerBase
     {
-        private readonly ILogger<CalculatorController> _logger;
-
-        public CalculatorController(ILogger<CalculatorController> logger)
-        {
-            _logger = logger;
-        }
+        public CalculatorController() { }
 
         [HttpGet("sum/{firstNumber}/{secondNumber}")]
         public IActionResult Sum(string firstNumber, string secondNumber)

@@ -48,7 +48,11 @@ namespace RestWithASP_NET5.Business.Implementations
             }
 
             var people = _repository.FindWithPagedSearch(query);
-            var totalResults = _repository.GetCount(countQuery);
+            var totalResults = 0;
+            if (people.Any())
+            {
+                totalResults = _repository.GetCount(countQuery);
+            }
 
             return new PagedSearchVO<PersonVO>
             {
