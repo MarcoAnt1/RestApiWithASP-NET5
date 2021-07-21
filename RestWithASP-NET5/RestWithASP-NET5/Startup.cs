@@ -8,7 +8,6 @@ using RestWithASP_NET5.Model.Context;
 using RestWithASP_NET5.Business;
 using RestWithASP_NET5.Business.Implementations;
 using RestWithASP_NET5.Repository;
-using Serilog;
 using System;
 using MySqlConnector;
 using System.Collections.Generic;
@@ -28,6 +27,7 @@ using System.Text;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.AspNetCore.Http;
+using Serilog;
 
 namespace RestWithASP_NET5
 {
@@ -60,8 +60,7 @@ namespace RestWithASP_NET5
             {
                 options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
                 options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-            })
-                .AddJwtBearer(option =>
+            }).AddJwtBearer(option =>
                 {
                     option.TokenValidationParameters = new TokenValidationParameters
                     {
@@ -92,10 +91,10 @@ namespace RestWithASP_NET5
             var connection = Configuration["MySQLConnection:MySQLConnectionString"];
             services.AddDbContext<MySqlContext>(options => options.UseMySql(connection, ServerVersion.AutoDetect(connection)));
 
-            //if (Environment.IsDevelopment())
-            //{
-            //    MigrateDatabase(connection);
-            //}
+            if (Environment.IsDevelopment())
+            {
+                MigrateDatabase(connection);
+            }
 
             services.AddMvc(options =>
             {
@@ -120,9 +119,9 @@ namespace RestWithASP_NET5
                     "v1",
                     new OpenApiInfo
                     {
-                        Title = "REST API's From 0 to Azure with ASP.NET Core 5 and Docker",
+                        Title = "REST API's From 0 to Azure with ASP.NET Core 5",
                         Version = "v1",
-                        Description = "API RESTful developed in course 'REST API's From 0 to Azure with ASP.NET Core 5 and Docker'",
+                        Description = "API RESTful developed in course 'REST API's From 0 to Azure with ASP.NET Core 5'",
                         Contact = new OpenApiContact()
                         {
                             Name = "Marco Antonio",
